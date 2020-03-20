@@ -1,2 +1,40 @@
-<h1>Main page</h1>
-{#<a href='login'> Login page </a>#}
+<head>
+  <meta charset="utf-8">
+  <title>profile</title>
+  <style>
+      header  {
+          height: 100px;
+          border-bottom: 1px solid grey;
+          display: inline-flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          width: 93%;
+          padding: 0 50px;
+      }
+
+      .cabinet {
+          display: inline-flex;
+      }
+  </style>
+</head>
+<body>
+    <header>
+        <div class="cabinet">
+            <img src="../registration/image/logo.png" alt="logo">
+            <h1>Личный кабинет</h1>
+        </div>
+        <div style="display: inline-flex ">
+
+            <h1>{% if user %}
+        {% for user in user_list %}
+            <h1>{{ user }}</h1>
+        {% endfor %}
+            {% else %}
+                <p>No models are available.</p>
+            {% endif %}
+            </h1>
+
+        </div>
+        <img src="" alt="выход">
+    </header>
+</body>

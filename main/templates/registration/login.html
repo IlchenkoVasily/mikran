@@ -40,14 +40,9 @@
             border-radius: 4px;
         }
 
-        .form-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        button {
+        input[type="submit"] {
             width: 100%;
-            height: 40px;
+            height: 35px;
             text-align: center;
             background-color: cornflowerblue;
             border: none;
@@ -55,6 +50,21 @@
             border-radius: 4px;
             margin-top: 20px;
             cursor: pointer;
+
+        }
+
+        table {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .mt {
+            margin-top: 15px;
+        }
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
         }
 
         p {
@@ -68,21 +78,44 @@
     </style>
  </head>
 <body>
+{% block content %}
     <div class="background">
-        <div class="login-form">
-            <img src="./image/logo.png" alt="типо лого">
-            <div class="form-item">
-                <label for="login-input">Логин</label>
-                <input type="text" id="login-input">
 
-            </div>
-            <div class="form-item">
-                <label for="login-pass">Пароль</label>
-                <input type="password" id="login-pass">
-            </div>
-            <button>Войти</button>
+        <div class="login-form">
+
+            <img src="./image/logo.png" alt="типо лого">
+            <form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table>
+
+<tr class="form-item">
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</tr>
+
+<tr class="form-item mt">
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</tr>
+</table>
+ {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+            {% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
             <p>Забыл пароль?</p>
         </div>
     </div>
 
 </body>
+{% endblock %}
